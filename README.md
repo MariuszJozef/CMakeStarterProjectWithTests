@@ -47,21 +47,67 @@ This project should serve as a convenient starting template for coding more elab
             └── StarterProject_StandAloneTests.cpp
 ```
 
-The program and tests can be executed by either:
-- a flag appended to cmake build command: **--target run runUnitTest**: 
-`cmake --build <buildDir> -j <number of CPU cores> --target run runUnitTest`
-or
-`cmake --build --preset <presetName> --target run runUnitTest`
-- or via ctest command: `ctest --test-dir <buildDir> -j <number of CPU cores> --output-on-failure`
+The program and tests can be executed either:
+- by CMake itself via a flag appended to cmake build command: **--target run runUnitTest**
+- or by CTest - but **make sure that the project is freshly built** because CTest doesn't rebuild any subsequent changes to the project.
 
-Only one set from the below command examples (not exhaustive) is needed, choose whichever suits:
+GTest (arguably) provides nicer output of test results, but CTest can be useful when non-C++ code needs to be incorporated and tested, e.g. Python routines.
+
+## Generic commands to run tests *without* CMakePresets.json
+### Single-config generator
+```
+cmake -S <sourceDir> -B <buildDir> -G <single-config generator> -D CMAKE_BUILD_TYPE=<buildType>
+cmake --build <buildDir> -j <number of CPU cores> --target run runUnitTest
+
+OR using CTest instead:
+
+cmake -S <sourceDir> -B <buildDir> -G <single-config generator> -D CMAKE_BUILD_TYPE=<buildType>
+cmake --build <buildDir> -j <number of CPU cores>
+ctest --test-dir <buildDir> -j <number of CPU cores> --output-on-failure
+```
+### Multi-config generator
+```
+cmake -S <sourceDir> -B <buildDir> -G <multi-config generator>
+cmake --build <buildDir> --config <buildType> -j <number of CPU cores> --target run runUnitTest
+
+OR using CTest instead:
+
+cmake -S <sourceDir> -B <buildDir> -G <multi-config generator>
+cmake --build <buildDir> --config <buildType> -j <number of CPU cores>
+ctest --test-dir <buildDir> --config <buildType> -j <number of CPU cores> --output-on-failure
+```
+## Generic commands to run tests *with* CMakePresets.json
+### Single-config generator
+```
+cmake --preset <single-config presetName>
+cmake --build --preset <single-config presetName> --target run runUnitTest
+
+OR using CTest instead:
+
+cmake --preset <single-config presetName>
+cmake --build --preset <single-config presetName>
+ctest --preset <single-config presetName> --output-on-failure
+```
+
+### Multi-config generator
+```
+cmake --preset <multi-config presetName>
+cmake --build --preset <multi-config presetName> --config <buildType> --target run runUnitTest
+
+OR using CTest instead:
+
+cmake --preset <multi-config presetName>
+cmake --build --preset <multi-config presetName> --config <buildType>
+ctest --preset <multi-config presetName> --config <buildType> --output-on-failure
+```
+Concrete command examples follow (not exhaustive), only one set from the below is needed, choose whichever suits. The flag `-D linkGTestAsSharedLibrary=<ON/OFF>` should be set to either ON or OFF; if omitted it will default to OFF and gtest will be linked as a static library instead of as a shared library.
 
 **N.B.**
 
 - On Windows 11 it is preferable to issue the commands from **"Developer Command Prompt for VS 2022"** instead of regular PowerShell or CMD because the former has predefined Visual Studio environment variables which enable compilation with VS compiler.
 - If nevertheless using PowerShell/CMD, or on Windows 10, one must first run some appropriate *.bat scripts that define VS environment variables.
 
-## CMake commands to configure, build, and run the program unit tests *without* CMakePresets.json
+## Example commands to configure, build, and run the program unit tests *without* CMakePresets.json
 
 ### Ninja single-config, VS (cl.exe) compiler
 ```
@@ -213,7 +259,7 @@ cmake --build buildNinjaMC/Clang -j8 --config MinSizeRel --target run runUnitTes
 ctest --test-dir buildNinjaMC/Clang -j8 --config MinSizeRel --output-on-failure
 ```
 
-## CMake commands to configure, build, and run the program unit tests *with* CMakePresets.json
+## Example commands to configure, build, and run the program unit tests *with* CMakePresets.json
 
 ### Ninja single-config, VS (cl.exe) compiler
 ```
