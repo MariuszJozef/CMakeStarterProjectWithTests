@@ -64,4 +64,21 @@ TEST(StarterProject_StandAloneTests, EuclideanDistance2)
     EXPECT_FLOAT_EQ(expected, result) << "Failed: EuclideanDistanceBetweenTwoPoints(point1, point2)";
 }
 
+TEST(StarterProject_StandAloneTests, PrivateComplexCalculation)
+{
+    // ARRANGE
+    Code::StarterProject::Calculation calculation;
+    int x {123};
+    float y {4.56f};
+    double z {78.9};
+
+    // ACT
+    calculation.CalculateViaPrivateMethod(x, y, z);
+    double result = calculation.GetCalculationResult();
+
+    // ASSERT
+    double expected = x - y * z;
+    EXPECT_DOUBLE_EQ(expected, result) << "Failed: CalculateViaPrivateMethod(x, y, z)";
+}
+
 } // ~namespace Tests::UnitTest

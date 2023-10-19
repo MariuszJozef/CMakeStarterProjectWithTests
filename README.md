@@ -2,6 +2,39 @@
 
 This project should serve as a convenient starting template for coding more elaborate projects with tests and mocks. Parametrised tests, fixtures, and mocks are exemplified and can be easily extended. 
 
+A noteworthy example provided here is the testing of a private method:
+
+```
+class Calculation final
+{
+public:
+    void CalculateViaPrivateMethod(int x, float y, double z);
+
+    ...
+
+private:
+    void PrivateMethodComplexCalculation(int x, float y, double z);
+};
+```
+
+It turns out that with googletest it is easiest to test the private method indirectly, via it's public interface, i.e. via the public method `CalculateViaPrivateMethod` which calls the private method `PrivateMethodComplexCalculation` to be tested:
+```
+TEST(StarterProject_StandAloneTests, PrivateComplexCalculation)
+{
+    // ARRANGE
+    Code::StarterProject::Calculation calculation;
+    ...
+
+    // ACT
+    calculation.CalculateViaPrivateMethod(x, y, z);
+    ...
+
+    // ASSERT
+    EXPECT_DOUBLE_EQ(expected, result) << "Failed: CalculateViaPrivateMethod(x, y, z)";
+}
+```
+Direct testing of private methods is also possible but messy and not attempted here (it requires `friend`-ship between source and test and same namespaces for both).
+
 ```
 git clone --depth 1 https://github.com/MariuszJozef/CMakeStarterProjectWithTests.git
 cd CMakeStarterProjectWithTests

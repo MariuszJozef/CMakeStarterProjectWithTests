@@ -44,9 +44,9 @@ protected:
 // Cannot be private!
 protected:
     Code::StarterProject::Calculation calculation;
-    int xx {123};
-    float yy {4.56f};
-    double zz {78.9};
+    int x {123};
+    float y {4.56f};
+    double z {78.9};
 };
 
 } // ~namespace Tests::UnitTest

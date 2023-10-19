@@ -8,28 +8,28 @@ TEST_F(StarterProject_FixtureTests, PrivateComplexCalculation1)
     // ARRANGE
 
     // ACT
-    calculation.CalculateViaPrivateMethod(xx, yy, zz);
+    calculation.CalculateViaPrivateMethod(x, y, z);
     double result = calculation.GetCalculationResult();
 
     // ASSERT
-    double expected = xx - yy * zz;
-    EXPECT_DOUBLE_EQ(expected, result) << "Failed: CalculateViaPrivateMethod(xx, yy, zz)";
+    double expected = x - y * z;
+    EXPECT_DOUBLE_EQ(expected, result) << "Failed: CalculateViaPrivateMethod(x, y, z)";
 }
 
 TEST_F(StarterProject_FixtureTests, PrivateComplexCalculation2)
 {
     // ARRANGE
-    xx += 4;
-    yy *= 5.5f;
-    zz /= 3.3;
+    x += 4;
+    y *= 5.5f;
+    z /= 3.3;
 
     // ACT
-    calculation.CalculateViaPrivateMethod(xx, yy, zz);
+    calculation.CalculateViaPrivateMethod(x, y, z);
     double result = calculation.GetCalculationResult();
 
     // ASSERT
-    double expected = xx - yy * zz;
-    EXPECT_DOUBLE_EQ(expected, result) << "Failed: CalculateViaPrivateMethod(xx, yy, zz)";
+    double expected = x - y * z;
+    EXPECT_DOUBLE_EQ(expected, result) << "Failed: CalculateViaPrivateMethod(x, y, z)";
 }
 
 } // ~namespace Tests::UnitTest
