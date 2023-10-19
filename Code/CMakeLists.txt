@@ -56,8 +56,6 @@ target_compile_definitions(targetExe
         STARTER_PROJECT
 )
 
-# target_link_options(targetExe PRIVATE )
-
 #[==================================================[
 Run the executable 
 #]==================================================]

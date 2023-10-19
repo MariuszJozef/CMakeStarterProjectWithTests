@@ -3,6 +3,11 @@
 This project should serve as a convenient starting template for coding more elaborate projects with tests and mocks. Parametrised tests, fixtures, and mocks are exemplified and can be easily extended. 
 
 ```
+git clone --depth 1 https://github.com/MariuszJozef/CMakeStarterProjectWithTests.git
+cd CMakeStarterProjectWithTests
+```
+
+```
 .
 ├── CMakeLists.txt
 ├── CMakePresets.json
@@ -54,6 +59,7 @@ The program and tests can be executed either:
 GTest (arguably) provides nicer output of test results, but CTest can be useful when non-C++ code needs to be incorporated and tested, e.g. Python routines.
 
 ## Generic commands to run tests *without* CMakePresets.json
+
 ### Single-config generator
 ```
 cmake -S <sourceDir> -B <buildDir> -G <single-config generator> -D CMAKE_BUILD_TYPE=<buildType>
