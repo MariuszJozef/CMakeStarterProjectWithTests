@@ -1,4 +1,4 @@
-# A simple project with tests and mocks to get started with (modern) CMake, CMakePresets.json, CTest, GTest and GMock
+# Demo project with tests and mocks to get started with (modern) CMake, CMakePresets.json, CTest, GTest and GMock
 
 This project should serve as a convenient starting template for coding more elaborate projects with tests and mocks. Parametrised tests, fixtures, and mocks are exemplified and can be easily extended. 
 
@@ -34,6 +34,9 @@ TEST(StarterProject_StandAloneTests, PrivateComplexCalculation)
 }
 ```
 Direct testing of private methods is also possible but messy and not attempted here (it requires `friend`-ship between source and test and same namespaces for both).
+
+For a simplest CMake with CMakePresets.json example but without tests/mocks, please refer to the demo
+[CMakeStarterProjectNoTests](https://github.com/MariuszJozef/CMakeStarterProjectNoTests.git).
 
 ```
 git clone --depth 1 https://github.com/MariuszJozef/CMakeStarterProjectWithTests.git
