@@ -92,7 +92,7 @@ The program and tests can be executed either:
 - by CMake itself via a flag appended to cmake build command: **--target run runUnitTest**
 - or by CTest - but **make sure that the project is freshly built** because CTest doesn't rebuild any subsequent changes to the project.
 
-GTest (arguably) provides nicer output of test results, but CTest can be useful when non-C++ code needs to be incorporated and tested, e.g. Python routines.
+GTest (arguably) provides nicer output of test results, but CTest can be useful when non-C++ code needs to be incorporated and tested, e.g. Python routines that are called by C++.
 
 ## Generic commands to run tests *without* CMakePresets.json
 
