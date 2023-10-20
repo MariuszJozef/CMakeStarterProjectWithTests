@@ -112,7 +112,7 @@ cmake --build buildMake/Gnu/ -j8 --target run runUnitTest
 
 ```
 cmake -S . -B buildMake/Gnu -G "Unix Makefiles" -D CMAKE_BUILD_TYPE=Debug -D setCompiler=gnu -D linkGTestAsSharedLibrary=OFF
-cmake --build buildMake/Gnu/ -j8 --target
+cmake --build buildMake/Gnu/ -j8
 ctest --test-dir buildMake/Gnu/ -j8 --output-on-failure
 ```
 
@@ -120,11 +120,13 @@ ctest --test-dir buildMake/Gnu/ -j8 --output-on-failure
 ![ScreenShot4b](ScreenShots/ScreenShot4b.png)
 ![ScreenShot4c](ScreenShots/ScreenShot4c.png)
 
-## Using CMake to link GTest/GMock on Linux/Mac vs on Windows - a big difference!
+## Using CMake to link GTest/GMock on Linux/Mac vs on Windows with MSVC - a big difference!
+
+### Linux/Mac
 
 On Linux/Mac (and probably also on Unix), if googletest (which includes gmock) is installed on the users computer, then one should locate the file *GTestConfig.cmake* and provide its path at the CMake configure step via the flag: `-D GTest_DIR=/path/to/GTestConfig.cmake/`.
 
-Alternatively, the variable GTest_DIR has been assigned a hardcoded path in the file:
+Alternatively, the variable `GTest_DIR`` has been assigned a hardcoded path in the file:
 [./CMakeUtils/FindOrFetch/FindOrFetchGTestGMock.cmake](./CMakeUtils/FindOrFetch/FindOrFetchGTestGMock.cmake),
 it may be adjusted there to the users proper path. 
 
@@ -132,12 +134,26 @@ If GTest is not installed or not found, then CMake will fetch GTest source code 
 
 One may also set the flag `linkGTestAsSharedLibrary` to `ON` or `OFF` to indicate whether to link gtest/gmock as a static or a shared library. If omitted it will default to OFF and gtest will be linked as a static library.
 
-So a full CMake configure command to may look like this:
+So a full CMake configure command may look like this:
 ```
 cmake -S . -B buildMake/Gnu -G "Unix Makefiles" -D CMAKE_BUILD_TYPE=Debug -D setCompiler=gnu -D linkGTestAsSharedLibrary=<ON/OFF> -D GTest_DIR=/path/to/GTestConfig.cmake/
 ```
 
+### Windows with MSVC compiler 
+
 On Windows, the only trouble-free way to link gtest/gmock is not to bother with any preinstalled gtest library on the computer, but for each project to fetch it directly from remote repository and build it together with a current project in question. This will result in multiple copies of gtest source code, but (on Windows) only this approach guarantees no compilation/linking errors. So on Windows the flag GTest_DIR is superfluous, but may be carried along without harm.
+
+So on Windows to link GTest with MSVC compiler, the CMake configure, build, run commands may take this form:
+```
+cmake -S . -B buildNMake/Msvc -G "NMake Makefiles" -D CMAKE_BUILD_TYPE=Debug -D setCompiler=msvc -D linkGTestAsSharedLibrary=<ON/OFF>
+cmake --build buildNMake/Msvc/ --target run runUnitTest
+```
+Or to run the tests with CTest instead:
+```
+cmake -S . -B buildNMake/Msvc -G "NMake Makefiles" -D CMAKE_BUILD_TYPE=Debug -D setCompiler=msvc -D linkGTestAsSharedLibrary=<ON/OFF>
+cmake --build buildNMake/Msvc/
+ctest --test-dir buildNMake/Msvc/ -j8 --output-on-failure
+```
 
 ## Generic commands to run tests *without* CMakePresets.json
 
