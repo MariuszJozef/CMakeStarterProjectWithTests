@@ -51,7 +51,7 @@ TEST_P(StarterProject_ParametrisedTests2, PrivateComplexCalculation)
     );
 #else
     INSTANTIATE_TEST_SUITE_P(
-        Batch2, 
+        Batch1, 
         StarterProject_ParametrisedTests2,
         ::testing::ValuesIn(parametersCalculation2Batch1)
     );
